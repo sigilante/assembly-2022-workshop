@@ -1,0 +1,11 @@
+:~
+  title+'Flappy Bird'
+  info+'An insanely irritating, difficult and frustrating game which combines a super-steep difficulty curve with bad, boring graphics and jerky movement.'
+  color+0xea.c124
+  version+[0 0 1]
+  website+'https://urbit.org'
+  license+'MIT'
+  base+'flappy'
+  site+/apps/flappy
+==
+
