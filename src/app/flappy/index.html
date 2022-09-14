@@ -2,26 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Original Flappy Bird -JavaScript</title>
-    <link href="https://fonts.googleapis.com/css?family=Teko:700" rel="stylesheet">
-    <style>        
-        canvas{
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Teko:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            font-family: "Inter", sans-serif;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        body > div {
+            max-width: 320px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            text-align: center;
+        }
+        tr:first-of-type {
+            font-weight: 700;
+            color: #918C84;
+        }
+        canvas {
             border: 1px solid #000;
             display: block;
             margin: 0 auto;
         }
+        #ship, #score, #hiscore {
+            display: block;
+            color: #000;
+            font-weight: 400;
+        }
+        #bird {
+            image-rendering: pixelated;
+        }
+        #ship, .ship {
+            font-family: monospace;
+        }
+        #our {
+            display: flex;
+        }
+        #our > p {
+            margin: 1rem;
+            font-weight: 700;
+            color: #918C84;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <div>
 <canvas id="bird" width="320" height="480"></canvas>
 
-<p>
-<span id="ship"></span>:  <span id="score"></span>/<span id="hiscore"></span>
+<div id="our">
+<p>Ship
+    <span id="ship"></span>
 </p>
-
 <p>
+    Last score
+    <span id="score"></span>
+</p>
+<p>High score <span id="hiscore"></span></p>
+</div>
+
+<p style="font-weight: 700; text-align: center; margin-top: 2rem;">Leaderboard</p>
+<p id="board">
 <div id="frens"></div>
 </p>
+</div>
 
 <script type="module">
 
@@ -37,7 +94,14 @@ async function gethiscore() {
         const response = await fetch('/apps/flappy/hiscore');
         return response.text();
     }
+
 var myhiscore = await gethiscore();
+
+async function updateHiScore() {
+    let newHiScore = await gethiscore();
+    myhiscore = newHiScore;
+}
+
 document.getElementById("hiscore").innerHTML = myhiscore;
 
 async function getscore() {
@@ -64,10 +128,16 @@ function drawtable(myfrens) {
     var frens = JSON.parse(myfrens);
 
     var table = document.createElement("table");
-
+    var titleRow = table.insertRow();
+    var frenCell = titleRow.insertCell();
+    frenCell.innerHTML = "Ship";
+    var scoreCell = titleRow.insertCell();
+    scoreCell.innerHTML = "Score";
+    
     for (let key in frens) {
         var row = table.insertRow();
         var cell = row.insertCell();
+        cell.classList += "ship";
         cell.innerHTML = frens[key]['fren'];
         cell = row.insertCell();
         cell.innerHTML = frens[key]['score'];
@@ -82,12 +152,13 @@ function drawtable(myfrens) {
     document.getElementById("frens").appendChild(table);
 }
 var myfrens = await getfrens();
-console.log(myfrens);
+
 drawtable(myfrens);
 
 // SELECT CVS
 const cvs = document.getElementById("bird");
 const ctx = cvs.getContext("2d");
+ctx.imageSmoothingEnabled = false;
 
 // GAME VARS AND CONSTS
 let frames = 0;
@@ -400,7 +471,7 @@ const pipes = {
 
 // SCORE
 const score= {
-    best : parseInt(localStorage.getItem("best")) || (gethiscore() ? gethiscore() : 0),
+    best : parseInt(localStorage.getItem("best")) || (myhiscore ? myhiscore : 0),
     value : 0,
     
     draw : function(){
@@ -425,6 +496,7 @@ const score= {
     },
     
     reset : function(){
+        updateHiScore();
         this.value = 0;
     }
 }
