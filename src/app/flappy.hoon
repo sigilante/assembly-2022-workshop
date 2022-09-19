@@ -10,7 +10,6 @@
 /-  *flappy, pals
 /+  default-agent               :: agent arm defaults
 /+  dbug                        :: debug wrapper for agent
-/+  gossip                      :: gossip protocol for %pals
 /+  schooner                    :: HTTP request handling
 /+  server                      :: HTTP request processing
 /+  verb                        :: support verbose output for agent
@@ -169,11 +168,6 @@
     ?:  =(our src):bol
       `this
     (on-watch:default path)
-  :: TODO possibly superfluous
-      [%~.~ %gossip %source ~]
-    :_  this
-    :~  [%give %fact ~ %flappy !>((~(got by scores) our.bol))]
-    ==
   ::
       [%flappy ~]
     ~&  >  "on-watch:  {<src.bol>}"
@@ -242,19 +236,6 @@
           ==
         ==
       ==  ==
-    ::
-      [%~.~ %gossip %gossip ~]
-    ?+  -.sign  ~|([%unexpected-gossip-sign -.sign] !!)
-        %fact
-      =*  mark  p.cage.sign
-      =*  vase  q.cage.sign
-      ?.  =(%face mark)
-        ~&  [dap.bol %unexpected-mark-fact mark wire=wire]
-        [~ this]
-      =+  !<(=^score vase)
-      ~&  >>>  "%gossip:  {<src.bol>}"
-      [~ this(scores (~(put by scores) src.bol score))]  :: TODO
-    ==
   ==
 ::
 ++  on-arvo
