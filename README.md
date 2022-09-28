@@ -1,6 +1,8 @@
 #   `%flap`
 ##  [Assembly 2022 Miami](https://assembly.urbit.org/) Workshop · ~2022.9.23
 
+_See https://github.com/urbit/developers.urbit.org/pull/170 for the fate of this tutorial._
+
 _Flappy Bird_ is an "insanely irritating, difficult and frustrating game which combines a super-steep difficulty curve with bad, boring graphics and jerky movement."  We are going to implement `%flap`, a _Flappy Bird_ leaderboard using `%pals` and an off-the-shelf FOSS JavaScript game.
 
 This workshop assumes that you have completed some version of Hoon School and App School, whether the [live courses](https://developers.urbit.org/courses) or the [written docs](https://developers.urbit.org/guides/core/hoon-school/A-intro).
